@@ -76,13 +76,7 @@ const Map = ({ markets, selectedMarket, onMarkerClick }) => {
               onMarkerClick(market);
             }
           });
-          // 선택된 마커 강조
-          if (selectedMarket && selectedMarket.latitude === market.latitude && selectedMarket.longitude === market.longitude) {
-            marker.setImage(getRedMarkerImage());  // 선택된 마커 강조
-            mapRef.current.setCenter(markerPosition);  // 지도 중심 이동
-            mapRef.current.setLevel(3);  // 지도 확대
         }
-      }
       });
 
       // 첫 번째 좌표가 있는 시장으로 지도의 중심을 이동
@@ -92,21 +86,12 @@ const Map = ({ markets, selectedMarket, onMarkerClick }) => {
         mapRef.current.setLevel(5); // 적절한 줌 레벨 설정
       }
 
-      // 선택된 시장이 있으면 해당 시장으로 중심 이동 및 줌 레벨 조정
+      // 선택된 시장이 있으면 해당 시장으로 중심 이동
       if (selectedMarket && selectedMarket.latitude != null && selectedMarket.longitude != null) {
         const selectedMarketMarker = markersRef.current.find(marker =>
           marker.getPosition().getLat() === selectedMarket.latitude &&
           marker.getPosition().getLng() === selectedMarket.longitude
         );
-
-        // 선택된 시장이 있으면 해당 시장으로 중심 이동 및 줌 레벨 조정
-if (selectedMarket && selectedMarket.latitude != null && selectedMarket.longitude != null) {
-  console.log('Moving map to selected market:', selectedMarket);
-  const selectedMarketPosition = new window.kakao.maps.LatLng(selectedMarket.latitude, selectedMarket.longitude);
-  mapRef.current.setCenter(selectedMarketPosition); // 선택된 마커 중심으로 이동
-  mapRef.current.setLevel(3); // 지도 줌 레벨 설정
-}
-
       }
     }
   };
