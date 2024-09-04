@@ -9,6 +9,10 @@ import LogIn from './components/subpages/LogIn';
 //import MarketList from './components/MarketList';
 //import RegionSelector from './components/RegionSelector';
 import AnyangMarkets from './components/AnyangMarkets';
+import Notice from './components/subpages/notice/Notice';
+import Write from './components/subpages/notice/Write'; // Write 컴포넌트 임포트
+import View from './components/subpages/notice/View'; // View 컴포넌트 임포트
+
 function MainContent() {
   return (
     <ContentContainer>
@@ -34,6 +38,9 @@ function App() {
           {/* 다른 경로 설정 */}
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/LogIn" element={<LogIn />} />
+          <Route path="/Notice/*" element={<Notice />} /> {/* Notice 페이지 연결 */}
+          <Route path="/Write" element={<Write />} /> {/* Write 페이지 연결 */}
+          <Route path="/view/:id" element={<View />} /> {/* View 페이지 연결 */}
           {/* 모든 미지정 경로를 기본 경로로 리디렉션 */}
           <Route path="*" element={<MainContent />} />
         </Routes>

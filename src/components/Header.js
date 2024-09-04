@@ -12,7 +12,7 @@ const Header = () => {
       <nav className="nav">
         <ul className="nav-links">
           <li><Link to="/MainContent">대문</Link></li>
-          <li><Link to="/Food">주변 맛집</Link></li>
+          <li><Link to="/Notice">게시판</Link></li>
           <li><Link to="/Signin">회원가입</Link></li>
           <li><Link to="/login">로그인</Link></li>
         </ul>
