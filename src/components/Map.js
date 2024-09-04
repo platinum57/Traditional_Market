@@ -33,44 +33,57 @@ const Map = ({ markets, selectedMarket }) => {
   // 새로운 마커를 찍는 함수
   const addMarkers = () => {
     if (mapRef.current && markets.length > 0) {
-      clearMarkers(); // 기존 마커 제거
+        clearMarkers(); // 기존 마커 제거
 
-      markets.forEach((market) => {
-        if (market.latitude != null && market.longitude != null) {
-          const markerPosition = new window.kakao.maps.LatLng(market.latitude, market.longitude);
+        markets.forEach((market) => {
+            if (market.latitude != null && market.longitude != null) {
+                const markerPosition = new window.kakao.maps.LatLng(market.latitude, market.longitude);
 
-          const marker = new window.kakao.maps.Marker({
-            position: markerPosition,
-            image: selectedMarket && selectedMarket.latitude === market.latitude && selectedMarket.longitude === market.longitude
-                ? getRedMarkerImage()  // 선택된 시장의 마커는 붉은색
-                : getDefaultMarkerImage()  // 나머지 마커는 기본색
-        });
-        marker.setMap(mapRef.current);
+                const marker = new window.kakao.maps.Marker({
+                    position: markerPosition,
+                    image: getDefaultMarkerImage() // 기본 마커 이미지 사용
+                });
+
+                marker.setMap(mapRef.current);
                 markersRef.current.push(marker); // 새로운 마커를 배열에 추가
-       // 마커 클릭 이벤트를 추가하여 시장 선택 상태 변경
-      window.kakao.maps.event.addListener(marker, 'click', () => {
-        mapRef.current.setCenter(markerPosition);
-        mapRef.current.setLevel(3);
-    });
-  }
-});
-                
-                
 
-      // 첫 번째 좌표가 있는 시장으로 지도의 중심을 이동
-      const firstMarketWithCoordinates = markets.find(market => market.latitude != null && market.longitude != null);
-      if (firstMarketWithCoordinates) {
-          mapRef.current.setCenter(new window.kakao.maps.LatLng(firstMarketWithCoordinates.latitude, firstMarketWithCoordinates.longitude));
-          mapRef.current.setLevel(5); // 적절한 줌 레벨 설정
+                const firstMarketWithCoordinates = markets.find(market => market.latitude != null && market.longitude != null);
+                if (firstMarketWithCoordinates) {
+                    mapRef.current.setCenter(new window.kakao.maps.LatLng(firstMarketWithCoordinates.latitude, firstMarketWithCoordinates.longitude));
+                    mapRef.current.setLevel(5); // 적절한 줌 레벨 설정
+                }
+
+                // 마커 클릭 이벤트를 추가하여 시장 선택 상태 변경
+                window.kakao.maps.event.addListener(marker, 'click', () => {
+                    mapRef.current.setCenter(markerPosition);
+                    mapRef.current.setLevel(3);
+
+                    // 선택된 마커를 빨간색으로 변경
+                    markersRef.current.forEach(m => m.setImage(getDefaultMarkerImage())); // 모든 마커 기본색으로
+                    marker.setImage(getRedMarkerImage()); // 클릭된 마커는 붉은색으로 변경
+                });
+            }
+        });
+
+        // 선택된 시장이 있으면 해당 시장으로 중심 이동 및 줌 레벨 조정
+        if (selectedMarket && selectedMarket.latitude != null && selectedMarket.longitude != null) {
+            const selectedMarketMarker = markersRef.current.find(marker =>
+                marker.getPosition().getLat() === selectedMarket.latitude &&
+                marker.getPosition().getLng() === selectedMarket.longitude
+            );
+
+            if (selectedMarketMarker) {
+              const selectedMarketPosition = new window.kakao.maps.LatLng(selectedMarket.latitude, selectedMarket.longitude);
+              mapRef.current.setCenter(selectedMarketPosition); // 선택된 마커 중심으로 이동
+              mapRef.current.setLevel(3); // 지도 줌 레벨 설정
+              selectedMarketMarker.setImage(getRedMarkerImage()); // 선택된 마커는 붉은색으로 변경
+          } else {
+              console.warn("Selected market marker not found in markersRef");
+          }
       }
-      // 선택된 시장이 있으면 해당 시장으로 중심 이동 및 줌 레벨 조정
-      if (selectedMarket && selectedMarket.latitude != null && selectedMarket.longitude != null) {
-        const selectedMarketPosition = new window.kakao.maps.LatLng(selectedMarket.latitude, selectedMarket.longitude);
-        mapRef.current.setCenter(selectedMarketPosition);
-        mapRef.current.setLevel(3);
-    }
-}
+  }
 };
+
 
   // 기본 마커 이미지 가져오기
   const getDefaultMarkerImage = () => {
