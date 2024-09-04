@@ -1,8 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 
-const Map = ({ markets, selectedMarket, onMarkerClick }) => {
+const Map = ({ markets, onMarkerClick }) => {
   const mapRef = useRef(null);
   const markersRef = useRef([]); // 기존 마커를 저장하는 배열
+  //let selectedMarker = null; // 선택된 마커를 추적하는 변수
+
+  const isWithinRange = (coordinate1, coordinate2, tolerance = 0.0001) => {
+    return Math.abs(coordinate1 - coordinate2) <= tolerance;
+  };
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -18,11 +23,44 @@ const Map = ({ markets, selectedMarket, onMarkerClick }) => {
           level: 5,
         };
         mapRef.current = new window.kakao.maps.Map(mapContainer, mapOption);
+
+        mapContainer.addEventListener('updateMap', (e) => {
+         const { latitude, longitude } = e.detail;
+
+    // 좌표가 없는 경우 updateMap 실행하지 않음
+    if (latitude == null || longitude == null) {
+      console.warn('좌표가 없는 시장입니다. updateMap 이벤트를 실행하지 않습니다.');
+      return;
+    }
+
+    if (mapRef.current) {
+      const position = new window.kakao.maps.LatLng(latitude, longitude);
+      mapRef.current.setCenter(position);
+      mapRef.current.setLevel(3);
+
+      // 모든 마커를 기본 이미지로 설정
+      markersRef.current.forEach(marker => {
+        marker.setImage(getDefaultMarkerImage());
+      });
+
+      // 선택된 마커를 빨간색으로 변경
+      const selectedMarker = markersRef.current.find(marker =>
+        isWithinRange(marker.getPosition().getLat(), latitude) &&
+        isWithinRange(marker.getPosition().getLng(), longitude)
+      );
+
+      if (selectedMarker) {
+        selectedMarker.setImage(getRedMarkerImage());
+      }
+    }
+  });
+
+        addMarkers(); // 지도 로드 후 마커 추가
       });
     };
 
     return () => script.remove();
-  }, []);
+  }, [markets]);
 
   // 기존 마커들을 제거하는 함수
   const clearMarkers = () => {
@@ -32,8 +70,8 @@ const Map = ({ markets, selectedMarket, onMarkerClick }) => {
 
   // 새로운 마커를 찍는 함수
   const addMarkers = () => {
-    if (mapRef.current && markets.length > 0) {
-      clearMarkers(); // 기존 마커 제거
+    if (mapRef.current && Array.isArray(markets)) { // Array.isArray로 확인
+      clearMarkers();
 
       markets.forEach((market) => {
         if (market.latitude != null && market.longitude != null) {
@@ -85,16 +123,9 @@ const Map = ({ markets, selectedMarket, onMarkerClick }) => {
         mapRef.current.setCenter(new window.kakao.maps.LatLng(firstMarketWithCoordinates.latitude, firstMarketWithCoordinates.longitude));
         mapRef.current.setLevel(5); // 적절한 줌 레벨 설정
       }
-
-      // 선택된 시장이 있으면 해당 시장으로 중심 이동
-      if (selectedMarket && selectedMarket.latitude != null && selectedMarket.longitude != null) {
-        const selectedMarketMarker = markersRef.current.find(marker =>
-          marker.getPosition().getLat() === selectedMarket.latitude &&
-          marker.getPosition().getLng() === selectedMarket.longitude
-        );
-      }
     }
   };
+  
 
   // 기본 마커 이미지 가져오기
   const getDefaultMarkerImage = () => {
@@ -112,7 +143,7 @@ const Map = ({ markets, selectedMarket, onMarkerClick }) => {
 
   useEffect(() => {
     addMarkers();
-  }, [markets, selectedMarket]);
+  }, [markets]);
 
   return <div id="map" style={{ width: '100%', height: '75vh' }} />;
 };
