@@ -109,7 +109,11 @@ const AnyangMarkets = () => {
               </li>
             ))}
           </ul>
-          <Map markets={markets} selectedMarket={selectedMarket} />
+          <Map 
+            markets={markets}  // 전체 시장 리스트 전달
+            selectedMarket={selectedMarket}  // 선택된 시장을 전달하여 강조
+            onMarkerClick={handleMarketClick}  // 마커 클릭 시 호출
+          />
         </>
       )}
     </div>
