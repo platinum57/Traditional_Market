@@ -94,14 +94,29 @@ const AnyangMarkets = () => {
       <button onClick={handleSearch}>검색</button>
       {loading && <div className="loading">로딩 중...</div>}
       {error && <div className="error">{error}</div>}
-      <ul className="markets-list">
-        {markets.map((market, index) => (
-          <li key={index} onClick={() => handleMarketClick(market)}>
-            {market.시장명}
-          </li>
-        ))}
-      </ul>
-      <Map markets={markets} selectedMarket={selectedMarket} />
+      {selectedMarket ? (
+        <MarketDetail
+          market={selectedMarket}
+          goBack={handleGoBack}
+          restaurants={restaurants}
+          error={error}
+        />
+      ) : (
+        <>
+          <ul className="markets-list">
+            {markets.map((market, index) => (
+              <li key={index} onClick={() => handleMarketClick(market)}>
+                {market.시장명}
+              </li>
+            ))}
+          </ul>
+          <Map 
+            markets={markets}  // 전체 시장 리스트 전달
+            selectedMarket={selectedMarket}  // 선택된 시장을 전달하여 강조
+            onMarkerClick={handleMarketClick}  // 마커 클릭 시 호출
+          />
+        </>
+      )}
     </div>
   );
 };
