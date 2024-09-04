@@ -35,7 +35,6 @@ const AnyangMarkets = () => {
   const handleRegionChange = (selectedRegion, selectedDistrict) => {
     setRegion(selectedRegion);
     setDistrict(selectedDistrict);
-    setSelectedMarket(null); // 선택된 시장만 초기화
   };
 
   // 검색 버튼 클릭 핸들러
@@ -50,14 +49,18 @@ const AnyangMarkets = () => {
     setLoading(false); // 로딩 상태 비활성화
   };
 
+  // 시장 클릭 핸들러
   const handleMarketClick = (market) => {
     setSelectedMarket(market); // 선택된 시장을 상태로 설정
   };
 
-  const handleGoBack = () => {
-    setSelectedMarket(null); // 선택된 시장 정보만 초기화
-  };
+  useEffect(() => {
+    if (selectedMarket) {
+      fetchRestaurants(selectedMarket.latitude, selectedMarket.longitude);
+    }
+  }, [selectedMarket]);
 
+  // 음식점 데이터 가져오는 함수
   const fetchRestaurants = async (latitude, longitude) => {
     try {
       const response = await axios.get('http://localhost:5000/api/restaurants-near-market', {
@@ -69,19 +72,13 @@ const AnyangMarkets = () => {
     }
   };
 
-  useEffect(() => {
-    if (selectedMarket) {
-      fetchRestaurants(selectedMarket.latitude, selectedMarket.longitude);
-    }
-  }, [selectedMarket]);
-
   if (selectedMarket) {
     return (
       <MarketDetail
         market={selectedMarket}
-        goBack={() => setSelectedMarket(null)}
         restaurants={restaurants}
         error={error}
+        reSearch={handleSearch} // 재검색 버튼에 handleSearch 연결
       />
     );
   }
@@ -89,36 +86,28 @@ const AnyangMarkets = () => {
   return (
     <div className="anyang-markets-container">
       <h1>지역별 전통시장 정보</h1>
-      <RegionSelector onRegionChange={handleRegionChange} />
+      <RegionSelector
+        onRegionChange={handleRegionChange}
+        selectedRegion={region}
+        selectedDistrict={district}
+      />
       <button onClick={handleSearch}>검색</button>
       {loading && <div className="loading">로딩 중...</div>}
       {error && <div className="error">{error}</div>}
-      {selectedMarket ? (
-        <MarketDetail
-          market={selectedMarket}
-          goBack={handleGoBack}
-          restaurants={restaurants}
-          error={error}
-        />
-      ) : (
-        <>
-          <ul className="markets-list">
-            {markets.map((market, index) => (
-              <li key={index} onClick={() => handleMarketClick(market)}>
-                {market.시장명}
-              </li>
-            ))}
-          </ul>
-          <Map markets={markets} selectedMarket={selectedMarket} />
-        </>
-      )}
+      <ul className="markets-list">
+        {markets.map((market, index) => (
+          <li key={index} onClick={() => handleMarketClick(market)}>
+            {market.시장명}
+          </li>
+        ))}
+      </ul>
+      <Map markets={markets} selectedMarket={selectedMarket} />
     </div>
   );
 };
 
-
 // 시장 상세 정보 컴포넌트
-const MarketDetail = ({ market, goBack, restaurants = [], error }) => {
+const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [marketError, setMarketError] = useState(null);
@@ -144,16 +133,19 @@ const MarketDetail = ({ market, goBack, restaurants = [], error }) => {
     fetchMarketDetails();
   }, [market]);
 
-  if (!market || !market.시장명 || !market.소재지도로명주소) {
-    return <div>시장의 세부 정보를 불러올 수 없습니다.</div>;
-  }
-
   if (loading) return <div>로딩 중...</div>;
-  if (marketError) return <div><button onClick={goBack}>뒤로가기</button><p>해당 시장의 상세 정보를 조회할 수 없습니다. (데이터 미제공)</p></div>;
+  if (marketError) {
+    return (
+      <div>
+        <button onClick={reSearch}>재검색</button>
+        <p>{marketError}</p>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <button onClick={goBack}>뒤로가기</button>
+      <button onClick={reSearch}>뒤로가기</button>
       <h2>{details.name}</h2>
       <p>주소: {details.address}</p>
       <p>주차장 보유 여부: {details.parking ? '예' : '아니오'}</p>
@@ -161,7 +153,7 @@ const MarketDetail = ({ market, goBack, restaurants = [], error }) => {
       <h3>편의시설 보유 현황</h3>
       <ul>
         <li>고객지원센터: {details.facilities.고객지원센터 ? '보유' : '미보유'}</li>
-        <li>유아놀이방(어린이 놀이터): {details.facilities.유아놀이방 ? '보유' : '미보유'}</li>
+        <li>유아놀이방: {details.facilities.유아놀이방 ? '보유' : '미보유'}</li>
         <li>고객휴게실: {details.facilities.고객휴게실 ? '보유' : '미보유'}</li>
         <li>수유실: {details.facilities.수유실 ? '보유' : '미보유'}</li>
         <li>물품보관함: {details.facilities.물품보관함 ? '보유' : '미보유'}</li>
@@ -176,9 +168,6 @@ const MarketDetail = ({ market, goBack, restaurants = [], error }) => {
               <h4>{restaurant.name}</h4>
               <p>거리: {restaurant.distance}m</p>
               <p>전화번호: {restaurant.phone || '없음'}</p>
-              {restaurant.thumbnail && (
-                <img src={restaurant.thumbnail} alt={restaurant.name} style={{ width: '100px', height: '100px' }} />
-              )}
             </li>
           ))
         ) : (
@@ -188,6 +177,5 @@ const MarketDetail = ({ market, goBack, restaurants = [], error }) => {
     </div>
   );
 };
-
 
 export default AnyangMarkets;

@@ -57,19 +57,24 @@ const Map = ({ markets, selectedMarket }) => {
       }
 
       if (selectedMarket && selectedMarket.latitude != null && selectedMarket.longitude != null) {
-          const selectedMarketMarker = markersRef.current.find(marker =>
-              marker.getPosition().getLat() === selectedMarket.latitude &&
-              marker.getPosition().getLng() === selectedMarket.longitude
+          const selectedLatLng = new window.kakao.maps.LatLng(selectedMarket.latitude, selectedMarket.longitude);
+          
+          const selectedMarker = markersRef.current.find(marker =>
+              marker.getPosition().equals(selectedLatLng)
           );
 
-          if (selectedMarketMarker) {
-              mapRef.current.setCenter(new window.kakao.maps.LatLng(selectedMarket.latitude, selectedMarket.longitude));
-              mapRef.current.setLevel(3);
-              selectedMarketMarker.setImage(getRedMarkerImage());
+          if (selectedMarker) {
+              mapRef.current.setCenter(selectedLatLng);  // 지도 중심을 선택한 시장의 좌표로 이동
+              mapRef.current.setLevel(3);  // 줌 레벨 조정
+              selectedMarker.setImage(getRedMarkerImage());  // 선택된 마커의 색상을 빨간색으로 변경
           }
       }
-  }
-};
+    }
+  };
+
+  useEffect(() => {
+      addMarkers();  // markets나 selectedMarket이 변경될 때 마커 추가 및 지도 이동
+  }, [markets, selectedMarket]);
 
   // 기본 마커 이미지 가져오기
   const getDefaultMarkerImage = () => {
@@ -77,16 +82,13 @@ const Map = ({ markets, selectedMarket }) => {
     const markerImageSize = new window.kakao.maps.Size(24, 35); // 마커 이미지 크기
     return new window.kakao.maps.MarkerImage(markerImageUrl, markerImageSize);
   };
-    // 붉은 마커 이미지 가져오기
+
+  // 붉은 마커 이미지 가져오기
   const getRedMarkerImage = () => {
     const markerImageUrl = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png';
     const markerImageSize = new window.kakao.maps.Size(24, 35);
     return new window.kakao.maps.MarkerImage(markerImageUrl, markerImageSize);
   };
-
-  useEffect(() => {
-      addMarkers();
-  }, [markets, selectedMarket]);
 
   return <div id="map" style={{ width: '100%', height: '75vh' }} />;
 };

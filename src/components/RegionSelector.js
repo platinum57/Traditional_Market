@@ -62,10 +62,8 @@ function RegionModal({ isOpen, onClose, regions, onRegionSelect, onDistrictSelec
   );
 }
 
-function RegionSelector({ onRegionChange }) {
+function RegionSelector({ onRegionChange, selectedRegion, selectedDistrict }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedRegion, setSelectedRegion] = useState("");
-  const [selectedDistrict, setSelectedDistrict] = useState("");
 
   const regions = {
     "서울특별시": [
@@ -149,12 +147,11 @@ function RegionSelector({ onRegionChange }) {
   };
 
   const handleRegionSelect = (region) => {
-    setSelectedRegion(region);
-    setSelectedDistrict(""); // 시/군/구 초기화
+    onRegionChange(region, ""); // 광역시/도 선택 시 시/군/구 초기화
   };
 
   const handleDistrictSelect = (district) => {
-    setSelectedDistrict(district);
+    onRegionChange(selectedRegion, district); // 선택된 시/군/구 전달
   };
 
   return (
