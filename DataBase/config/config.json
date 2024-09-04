@@ -2,8 +2,8 @@
   "development": {
     "username": "root",
     "password": "root123!",
-    "database": "testtset",
-    "host": "127.0.0.1",
+    "database": "traditional-market",
+    "host": "traditional-market.c9okiuoku4c3.ap-southeast-2.rds.amazonaws.com",
     "port": 3306,
     "dialect": "mysql"
   },
