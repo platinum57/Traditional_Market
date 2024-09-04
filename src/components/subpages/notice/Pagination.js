@@ -1,22 +1,27 @@
 import React from "react";
-import {Link} from 'react-router-dom';
-import '../../../assets/CSS/Notice.css';
 
-function Pagination() {
+const Pagination = ({ postsPerPage, totalPosts, paginate, currentPage }) => {
+    const pageNumbers = [];
+
+    // 총 페이지 수 계산
+    for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+        pageNumbers.push(i);
+    }
 
     return (
-        <div className="board-page">
-            <Link to="#" className="btn first">&lt;&lt;</Link>
-            <Link to="#" className="btn prev">&lt;</Link>
-            <Link to="#" className="num on">1</Link>
-            <Link to="#" className="num">2</Link>
-            <Link to="#" className="num">3</Link>
-            <Link to="#" className="num">4</Link>
-            <Link to="#" className="num">5</Link>
-            <Link to="#" className="btn next">&gt;</Link>
-            <Link to="#" className="btn last">&gt;&gt;</Link>
-        </div>
-    )
-}
+        <nav className="board-page">
+            {pageNumbers.map(number => (
+                <span key={number} className={`num ${currentPage === number ? 'on' : ''}`}>
+                    <button
+                        onClick={() => paginate(number)}  // 페이지 변경
+                        className="page-link"
+                    >
+                        {number}
+                    </button>
+                </span>
+            ))}
+        </nav>
+    );
+};
 
 export default Pagination;

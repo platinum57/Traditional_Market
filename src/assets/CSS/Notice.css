@@ -84,6 +84,35 @@
     text-align: center;
 }
 
+.board-page .num {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+    line-height: 32px;
+    text-align: center;
+}
+
+.board-page .num.on {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+}
+
+.board-page .num button {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: inherit;
+    text-align: center;
+}
+
+
 .board-page .btn, 
 .board-page .num {
     display: inline-block;
@@ -105,19 +134,8 @@
     letter-spacing: -1px;
 }
 
-.board-page .num {
-    padding-top: 9px;
-    font-size: 1.4rem;
-}
-
 .board-page .btn:first-child {
     border-left: 1px solid #ddd;
-}
-
-.board-page .num.on {
-    border-color: #000;
-    background: #000;
-    color: #fff;
 }
 
 .title2 {
@@ -173,6 +191,9 @@ div.input-title {
 
 .input-title dd input {
     width: 100%;
+    border: 0;
+    outline: none;
+    background-color: #f3f1f1;
 }
 
 textarea {
@@ -184,4 +205,5 @@ textarea {
     border: 0;
     resize: none;
     overflow: auto;
+    outline: none;
 }
