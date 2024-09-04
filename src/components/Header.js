@@ -12,7 +12,8 @@ const Header = () => {
       <nav className="nav">
         <ul className="nav-links">
           <li><Link to="/MainContent">대문</Link></li>
-          <li><Link to="/Notice">게시판</Link></li>
+          <li><Link to="/Notice">공지사항</Link></li>
+          <li><Link to="/QnA">질문</Link></li>
           <li><Link to="/Signin">회원가입</Link></li>
           <li><Link to="/login">로그인</Link></li>
         </ul>

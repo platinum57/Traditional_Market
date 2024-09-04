@@ -4,7 +4,8 @@ import NoticeList from "./NoticeList";
 import Pagination from './Pagination';
 import View from './View';
 import Write from './Write';
-import '../../../assets/CSS/Notice.css';
+// import '../../../assets/CSS/Notice.css';
+import '../../../assets/CSS/notice-css/global.css';
 
 function Notice() {
     const [posts, setPosts] = useState([

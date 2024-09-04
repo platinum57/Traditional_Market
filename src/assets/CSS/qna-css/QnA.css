@@ -1,0 +1,33 @@
+.qna-container {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.qna-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.qna-header h1 {
+    font-size: 24px;
+}
+
+.btn-write {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-write a {
+    text-decoration: none;
+    color: white;
+}
+
+.btn-write:hover {
+    background-color: #0056b3;
+}
