@@ -8,7 +8,7 @@ import SignIn from './components/subpages/SignIn';
 import LogIn from './components/subpages/LogIn';
 //import MarketList from './components/MarketList';
 //import RegionSelector from './components/RegionSelector';
-import AnyangMarkets from './components/AnyangMarkets';
+import MarketInfo from './components/MarketInfo';
 import Notice from './components/subpages/notice/Notice';
 import Write from './components/subpages/notice/Write'; // Write 컴포넌트 임포트
 import View from './components/subpages/notice/View'; // View 컴포넌트 임포트
@@ -22,7 +22,7 @@ function MainContent() {
       </MapWrapper>
       <RightContainer>
         <MarketListContainer>
-          <AnyangMarkets />
+          <MarketInfo />
         </MarketListContainer>
       </RightContainer>
     </ContentContainer>

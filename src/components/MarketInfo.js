@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import RegionSelector from './RegionSelector';
 import Map from './Map';
+import Sorry from '../assets/img/sorry.png';
 import Markets from '../assets/CSS/Markets.css';
-import {
-  loungeTrue,  loungeFalse,  lockerTrue,  lockerFalse,  bycicleFalse,  bycicleTrue,  helpdestFalse,  helpdestTrue,  mommyFalse,  mommyTrue,  parkingFalse,  parkingTrue,  playFalse,  playTrue,  voucherFalse,  voucherTrue
-} from '../assets/img/icons/icons'
+
 const localhosturl = 'http://localhost:5050'
 
-const AnyangMarkets = () => {
+const MarketInfo = () => {
   const [region, setRegion] = useState('');
   const [district, setDistrict] = useState('');
   const [markets, setMarkets] = useState([]);
@@ -47,18 +46,17 @@ const AnyangMarkets = () => {
     setMarkets([]); // 시장 목록 초기화
     setLoading(true); // 로딩 상태 활성화
     setSelectedMarket(null); // 선택된 시장 초기화 (상세 페이지 비표시)
-    
-    // 시장 데이터를 비동기로 가져오기
+
     await fetchMarkets(); // fetchMarkets가 완료된 후 다음 작업 진행
-  
     setLoading(false); // 로딩 상태 비활성화
   };
 
   // 시장 클릭 핸들러
-  const handleMarketClick = (market) => {
+  const handleMarketClick = async (market) => {
     // 1. 기존 상세 정보를 리셋
-    setSelectedMarket(null); // 선택된 시장을 초기화
     setRestaurants([]); // 음식점 정보 초기화
+    setSelectedMarket(null); // 선택된 시장을 초기화
+    setError(null); // 에러 상태 초기화
     setLoading(true); // 로딩 상태로 설정
   
     // 2. 클릭한 시장의 좌표를 이용해 updateMap 이벤트 발생
@@ -67,19 +65,17 @@ const AnyangMarkets = () => {
   
     // 3. 클릭한 시장의 상세 정보를 불러옴 (setSelectedMarket을 통해 불러옴)
     setSelectedMarket(market);
-  };
+};
+
+const clearRestaurants = () => {
+  setRestaurants([]); // 음식점 정보를 빈 배열로 초기화
+};
 
   useEffect(() => {
     if (selectedMarket) {
       const coords = { latitude: selectedMarket.latitude, longitude: selectedMarket.longitude };
       // 좌표값을 사용하여 지도 이동
       document.getElementById('map').dispatchEvent(new CustomEvent('updateMap', { detail: coords }));
-      fetchRestaurants(selectedMarket.latitude, selectedMarket.longitude);
-    }
-  }, [selectedMarket]);
-
-  useEffect(() => {
-    if (selectedMarket) {
       fetchRestaurants(selectedMarket.latitude, selectedMarket.longitude);
     }
   }, [selectedMarket]);
@@ -140,6 +136,7 @@ const AnyangMarkets = () => {
             markets={markets}  // 전체 시장 리스트 전달
             selectedMarket={selectedMarket}  // 클릭한 마커를 강조하기 위한 선택된 시장 전달
             onMarkerClick={setSelectedMarket}  // 마커 클릭 시 호출
+            clearRestaurants={clearRestaurants} // 음식점 정보 초기화 함수 전달
           />
         </>
       )}
@@ -151,10 +148,13 @@ const AnyangMarkets = () => {
 const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [marketError, setMarketError] = useState(null);
+  const [apiError, setApiError] = useState(null); // 서버 에러 상태 추가
 
   useEffect(() => {
     const fetchMarketDetails = async () => {
+      setLoading(true);
+      setApiError(null); // API 에러 초기화
+
       try {
         const response = await axios.get(`${localhosturl}/api/market-details`, {
           params: {
@@ -163,11 +163,20 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
             parking: market.주차장보유여부,
           },
         });
-        setDetails(response.data);
-      } catch (err) {
-        setMarketError('해당 시장의 상세 정보를 조회할 수 없습니다. (데이터 미제공)');
+        if (response.data) {
+          // 상세 정보를 성공적으로 불러왔을 경우
+          setDetails(response.data);
+        } else {
+          // 불러오는 데 실패한 경우 에러 메시지 표시
+          setDetails({
+            error: '해당 시장의 상세 정보를 조회할 수 없습니다. (데이터 미제공)',
+          });
+        }
+      } catch (error) {
+        // 서버 에러일 경우 에러 메시지 설정
+        setApiError('해당 시장의 상세 정보를 조회할 수 없습니다. (데이터 미제공)');
       } finally {
-        setLoading(false);
+        setLoading(false); // 로딩 상태 해제
       }
     };
 
@@ -175,11 +184,21 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
   }, [market]);
 
   if (loading) return <div>로딩 중...</div>;
-  if (marketError) {
+
+  if (apiError) {
     return (
       <div>
-        <button onClick={reSearch}>재검색</button>
-        <p>{marketError}</p>
+        <button onClick={reSearch}>뒤로가기</button>
+        <p>{apiError}</p>
+      </div>
+    );
+  }
+
+  if (details && details.error) {
+    return (
+      <div>
+        <button onClick={reSearch}>뒤로가기</button>
+        <p>{details.error}</p>
       </div>
     );
   }
@@ -189,36 +208,34 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
       <button onClick={reSearch}>뒤로가기</button>
       <h2>{details.name}</h2>
       <p>주소: {details.address}</p>
-      <p><img src={details.parking ? parkingTrue : parkingFalse} className="img-detail-big" />
-      <img src={market.acceptsOnnuri ? voucherTrue:voucherFalse} className="img-detail-big"/></p>
-      <p className='text-spacing'>{details.parking ? '주차장 있어요' : '주차장 없어요'}<span className='texp-gap'></span>
-      {market.acceptsOnnuri ? '온누리상품권 써져요' : '온누리상품권 안써져요'}
-      </p>
-      <h3>기타 편의 시설</h3>
-      <div className='detail'>
-        <img src={details.facilities.고객지원센터 ? helpdestTrue : helpdestFalse} className="img-detail"/>
-        <img src={details.facilities.유아놀이방 ? playTrue : playFalse} className="img-detail"/>
-        <img src={details.facilities.고객휴게실 ? loungeTrue : loungeFalse} className="img-detail"/>
-        <img src={details.facilities.수유실 ? mommyTrue : mommyFalse} className="img-detail"/>
-        <img src={details.facilities.물품보관함 ? lockerTrue : lockerFalse} className="img-detail"/>
-        <img src={details.facilities.자전거보관함 ? bycicleTrue : bycicleFalse} className="img-detail"/>
-      </div>
-      <h3>반경 500m 내 음식점</h3>
+      <p>주차장 보유 여부: {details.parking ? '예' : '아니오'}</p>
+      <p>온누리상품권: {market.acceptsOnnuri ? '사용 가능' : '사용 불가'}</p>
+      <h3>편의시설 보유 현황</h3>
       <ul>
-        {restaurants.length > 0 ? (
-          restaurants.map((restaurant, index) => (
-            <li key={index}>
-              <h4>{restaurant.name}</h4>
-              <p>거리: {restaurant.distance}m</p>
-              <p>전화번호: {restaurant.phone || '없음'}</p>
-            </li>
-          ))
-        ) : (
-          <p>음식점 정보를 불러오지 못했습니다. (데이터 미제공)</p>
-        )}
+        <li>고객지원센터: {details.facilities.고객지원센터 ? '보유' : '미보유'}</li>
+        <li>유아놀이방: {details.facilities.유아놀이방 ? '보유' : '미보유'}</li>
+        <li>고객휴게실: {details.facilities.고객휴게실 ? '보유' : '미보유'}</li>
+        <li>수유실: {details.facilities.수유실 ? '보유' : '미보유'}</li>
+        <li>물품보관함: {details.facilities.물품보관함 ? '보유' : '미보유'}</li>
+        <li>자전거보관함: {details.facilities.자전거보관함 ? '보유' : '미보유'}</li>
       </ul>
+
+      <h3>반경 500m 내 음식점</h3>
+<ul>
+  {error || restaurants.length === 0 ? (
+    <p>{error || '표시할 음식점이 없습니다. (데이터 미제공)'}</p>
+  ) : (
+    restaurants.map((restaurant, index) => (
+      <li key={index}>
+        <h4>{restaurant.name}</h4>
+        <div><img src={restaurant.thumbnail ? restaurant.thumbnail : Sorry}/></div>
+        <p>거리: {restaurant.distance}m</p>
+        <p>전화번호: {restaurant.phone || '없음'}</p>
+      </li>
+    ))
+  )}
+</ul>
     </div>
   );
 };
-
-export default AnyangMarkets;
+export default MarketInfo;

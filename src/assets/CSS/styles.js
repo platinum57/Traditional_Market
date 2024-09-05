@@ -73,4 +73,5 @@ export const MarketListContainer = styled.div`
   flex: 9; /* 하단 영역 */
   padding: 20px;
   overflow-y: scroll; /* 세로 스크롤 활성화 */
+  margin-bottom: 50px;
 `;

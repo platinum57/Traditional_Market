@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AnyangMarkets from './AnyangMarkets';
+//import MarketInfo from './MarketInfo';
 import '../assets/CSS/RegionSelector.css'; // 스타일링을 위한 CSS 파일
 
 function RegionModal({ isOpen, onClose, regions, onRegionSelect, onDistrictSelect, selectedRegion, selectedDistrict, onConfirm }) {
