@@ -53,10 +53,11 @@ const AnyangMarkets = () => {
   };
 
   // 시장 클릭 핸들러
-  const handleMarketClick = (market) => {
+  const handleMarketClick = async (market) => {
     // 1. 기존 상세 정보를 리셋
-    setSelectedMarket(null); // 선택된 시장을 초기화
     setRestaurants([]); // 음식점 정보 초기화
+    setSelectedMarket(null); // 선택된 시장을 초기화
+    setError(null); // 에러 상태 초기화
     setLoading(true); // 로딩 상태로 설정
   
     // 2. 클릭한 시장의 좌표를 이용해 updateMap 이벤트 발생
@@ -65,7 +66,36 @@ const AnyangMarkets = () => {
   
     // 3. 클릭한 시장의 상세 정보를 불러옴 (setSelectedMarket을 통해 불러옴)
     setSelectedMarket(market);
-  };
+
+   // 4. 클릭한 시장 근처 음식점 정보를 다시 불러오기
+    try {
+    const response = await axios.get(`${localhosturl}/api/restaurants-near-market`, {
+      params: {
+        latitude: market.latitude,
+        longitude: market.longitude,
+      },
+    });
+
+    if (response.data && response.data.length > 0) {
+      // 음식점 데이터가 성공적으로 불러와졌을 경우
+      setRestaurants(response.data);
+    } else {
+      // 음식점 데이터가 없을 경우
+      setRestaurants([]); // 음식점 리스트 초기화
+      setError('음식점이 없습니다.');
+    }
+  } catch (err) {
+    // 오류 발생 시 처리
+    setRestaurants([]); // 오류 시에도 이전 데이터 초기화
+    setError('음식점 정보를 불러오는 중 오류가 발생했습니다.');
+  } finally {
+    setLoading(false); // 로딩 상태 해제
+  }
+};
+
+const clearRestaurants = () => {
+  setRestaurants([]); // 음식점 정보를 빈 배열로 초기화
+};
 
   useEffect(() => {
     if (selectedMarket) {
@@ -138,6 +168,7 @@ const AnyangMarkets = () => {
             markets={markets}  // 전체 시장 리스트 전달
             selectedMarket={selectedMarket}  // 클릭한 마커를 강조하기 위한 선택된 시장 전달
             onMarkerClick={setSelectedMarket}  // 마커 클릭 시 호출
+            clearRestaurants={clearRestaurants} // 음식점 정보 초기화 함수 전달
           />
         </>
       )}
@@ -146,15 +177,18 @@ const AnyangMarkets = () => {
 };
 
 // 시장 상세 정보 컴포넌트
+// 시장 상세 정보 컴포넌트
 const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [apiError, setApiError] = useState(null); // 서버 에러 상태 추가
+  const [restaurantError, setRestaurantError] = useState(false); // 음식점 에러 상태 추가
 
   useEffect(() => {
     const fetchMarketDetails = async () => {
       setLoading(true);
       setApiError(null); // API 에러 초기화
+      setRestaurantError(false); // 음식점 에러 초기화
       try {
         const response = await axios.get(`${localhosturl}/api/market-details`, {
           params: {
@@ -195,14 +229,22 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
     );
   }
 
-  
+  if (details && details.error) {
+    return (
+      <div>
+        <button onClick={reSearch}>재검색</button>
+        <p>{details.error}</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <button onClick={reSearch}>뒤로가기</button>
       <h2>{details.name}</h2>
       <p>주소: {details.address}</p>
       <p>주차장 보유 여부: {details.parking ? '예' : '아니오'}</p>
-      <p>온누리상품권: {market.acceptsOnnuri ? '사용 가능':'사용 불가'}</p>
+      <p>온누리상품권: {market.acceptsOnnuri ? '사용 가능' : '사용 불가'}</p>
       <h3>편의시설 보유 현황</h3>
       <ul>
         <li>고객지원센터: {details.facilities.고객지원센터 ? '보유' : '미보유'}</li>
@@ -214,19 +256,19 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
       </ul>
 
       <h3>반경 500m 내 음식점</h3>
-      <ul>
-        {restaurants.length > 0 ? (
-          restaurants.map((restaurant, index) => (
-            <li key={index}>
-              <h4>{restaurant.name}</h4>
-              <p>거리: {restaurant.distance}m</p>
-              <p>전화번호: {restaurant.phone || '없음'}</p>
-            </li>
-          ))
-        ) : (
-          <p>음식점 정보를 불러오지 못했습니다. (데이터 미제공)</p>
-        )}
-      </ul>
+<ul>
+  {error || restaurants.length === 0 ? (
+    <p>{error || '음식점이 없습니다.'}</p>
+  ) : (
+    restaurants.map((restaurant, index) => (
+      <li key={index}>
+        <h4>{restaurant.name}</h4>
+        <p>거리: {restaurant.distance}m</p>
+        <p>전화번호: {restaurant.phone || '없음'}</p>
+      </li>
+    ))
+  )}
+</ul>
     </div>
   );
 };

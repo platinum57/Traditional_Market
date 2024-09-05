@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const Map = ({ markets, onMarkerClick }) => {
+const Map = ({ markets, onMarkerClick, clearRestaurants  }) => {
   const mapRef = useRef(null);
   const markersRef = useRef([]); // 기존 마커를 저장하는 배열
   //let selectedMarker = null; // 선택된 마커를 추적하는 변수
@@ -108,6 +108,11 @@ const Map = ({ markets, onMarkerClick }) => {
             // 선택된 마커를 빨간색으로 변경
             markersRef.current.forEach(m => m.setImage(getDefaultMarkerImage())); // 모든 마커 기본색으로
             marker.setImage(getRedMarkerImage()); // 클릭된 마커는 붉은색으로 변경
+
+            // 마커가 클릭될 때 음식점 데이터를 무조건 초기화
+            if (clearRestaurants) {
+              clearRestaurants(); // 음식점 정보 초기화 함수 호출
+            }
 
             // 클릭한 마커(시장) 정보를 상위 컴포넌트로 전달
             if (onMarkerClick) {
