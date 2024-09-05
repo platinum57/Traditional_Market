@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import RegionSelector from './RegionSelector';
 import Map from './Map';
+import Sorry from '../assets/img/sorry.png';
 import Markets from '../assets/CSS/Markets.css';
 
 const localhosturl = 'http://localhost:5050'
@@ -227,6 +228,7 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
     restaurants.map((restaurant, index) => (
       <li key={index}>
         <h4>{restaurant.name}</h4>
+        <div><img src={restaurant.thumbnail ? restaurant.thumbnail : Sorry}/></div>
         <p>거리: {restaurant.distance}m</p>
         <p>전화번호: {restaurant.phone || '없음'}</p>
       </li>
