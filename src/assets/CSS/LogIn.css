@@ -27,7 +27,7 @@
   font-weight: bold;
 }
 
-.login-container .form-group input {
+.form-group input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
@@ -50,4 +50,8 @@
 
 .login-container button:hover {
   background-color: #45a049;
+}
+
+.login-btn {
+  margin-top: 40px;
 }
