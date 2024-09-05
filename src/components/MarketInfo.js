@@ -4,6 +4,9 @@ import RegionSelector from './RegionSelector';
 import Map from './Map';
 import Sorry from '../assets/img/sorry.png';
 import Markets from '../assets/CSS/Markets.css';
+import {
+  loungeTrue,  loungeFalse,  lockerTrue,  lockerFalse,  bycicleFalse,  bycicleTrue,  helpdestFalse,  helpdestTrue,  mommyFalse,  mommyTrue,  parkingFalse,  parkingTrue,  playFalse,  playTrue,  voucherFalse,  voucherTrue
+} from '../assets/img/icons/icons'
 
 const localhosturl = 'http://localhost:5050'
 
@@ -208,17 +211,20 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
       <button onClick={reSearch}>뒤로가기</button>
       <h2>{details.name}</h2>
       <p>주소: {details.address}</p>
-      <p>주차장 보유 여부: {details.parking ? '예' : '아니오'}</p>
-      <p>온누리상품권: {market.acceptsOnnuri ? '사용 가능' : '사용 불가'}</p>
-      <h3>편의시설 보유 현황</h3>
-      <ul>
-        <li>고객지원센터: {details.facilities.고객지원센터 ? '보유' : '미보유'}</li>
-        <li>유아놀이방: {details.facilities.유아놀이방 ? '보유' : '미보유'}</li>
-        <li>고객휴게실: {details.facilities.고객휴게실 ? '보유' : '미보유'}</li>
-        <li>수유실: {details.facilities.수유실 ? '보유' : '미보유'}</li>
-        <li>물품보관함: {details.facilities.물품보관함 ? '보유' : '미보유'}</li>
-        <li>자전거보관함: {details.facilities.자전거보관함 ? '보유' : '미보유'}</li>
-      </ul>
+      <p><img src={details.parking ? parkingTrue : parkingFalse} className="img-detail-big" />
+      <img src={market.acceptsOnnuri ? voucherTrue:voucherFalse} className="img-detail-big"/></p>
+      <p className='text-spacing'>{details.parking ? '주차장 있어요' : '주차장 없어요'}<span className='texp-gap'></span>
+      {market.acceptsOnnuri ? '온누리상품권 써져요' : '온누리상품권 안써져요'}
+      </p>
+      <h3>기타 편의 시설</h3>
+      <div className='detail'>
+        <img src={details.facilities.고객지원센터 ? helpdestTrue : helpdestFalse} className="img-detail"/>
+        <img src={details.facilities.유아놀이방 ? playTrue : playFalse} className="img-detail"/>
+        <img src={details.facilities.고객휴게실 ? loungeTrue : loungeFalse} className="img-detail"/>
+        <img src={details.facilities.수유실 ? mommyTrue : mommyFalse} className="img-detail"/>
+        <img src={details.facilities.물품보관함 ? lockerTrue : lockerFalse} className="img-detail"/>
+        <img src={details.facilities.자전거보관함 ? bycicleTrue : bycicleFalse} className="img-detail"/>
+      </div>
 
       <h3>반경 500m 내 음식점</h3>
 <ul>
