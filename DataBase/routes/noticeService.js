@@ -119,4 +119,34 @@ router.delete('/delete/:notice_num', async (req, res) => {
     }
 });
 
+// 공지사항 목록을 가져오는 API
+router.get('/', async (_, res) => {
+    try {
+        // 데이터베이스에서 모든 공지사항을 불러옴
+        const notices = await Notice.findAll();  // 모든 공지사항 데이터 조회
+        res.status(200).json(notices);  // 공지사항 데이터를 JSON 형식으로 클라이언트에 반환
+    } catch (error) {
+        console.error('Error fetching notices:', error);
+        res.status(500).json({ error: '공지사항을 불러오는 중 오류가 발생했습니다.' });
+    }
+});
+
+// 특정 공지사항을 불러오는 API
+router.get('/:notice_num', async (req, res) => {
+    try {
+        const { notice_num } = req.params;
+        const notice = await Notice.findOne({ where: { notice_num } });
+
+        if (!notice) {
+            return res.status(404).json({ message: '해당 공지사항을 찾을 수 없습니다.' });
+        }
+
+        res.status(200).json(notice);
+    } catch (error) {
+        console.error('Error fetching notice:', error);
+        res.status(500).json({ error: '공지사항을 불러오는 중 오류가 발생했습니다.' });
+    }
+});
+
+
 module.exports = router;

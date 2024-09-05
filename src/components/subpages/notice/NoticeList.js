@@ -11,7 +11,7 @@ function NoticeList() {
     // 서버에서 공지사항 목록을 불러오는 함수
     const fetchNotices = async () => {
         try {
-            const response = await axios.get('/notice'); // 공지사항 목록을 가져오는 API 호출
+            const response = await axios.get('http://localhost:3010/notice'); // 공지사항 목록을 가져오는 API 호출
             setNotices(response.data); // 공지사항 목록을 상태로 설정
         } catch (error) {
             console.error('Error fetching notices:', error);
