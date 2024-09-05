@@ -14,7 +14,7 @@ function View() {
         const fetchPost = async () => {
             try {
                 // 서버에서 해당 ID의 게시글을 가져옴
-                const response = await axios.get(`/notice/view/${notice_num}`);
+                const response = await axios.get(`http://localhost:3010/notice/${notice_num}`);
                 setPost(response.data);
             } catch (error) {
                 console.error('Error fetching notice:', error);
