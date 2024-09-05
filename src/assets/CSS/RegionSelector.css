@@ -1,4 +1,17 @@
 /* RegionSelector.css */
+@font-face {
+  font-family: 'GangwonEdu_OTFBoldA';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
 
 .modal {
   position: fixed;
@@ -30,20 +43,27 @@
 }
 
 button {
-  padding: 10px;
+  padding: 6px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+<<<<<<< HEAD
   background-color: lightgray;
   display: inline-block;
+=======
+  background-color: #F5F5F5;
+  font-size: 16px;
+  font-family: 'GangwonEdu_OTFBoldA';
+>>>>>>> hwang5
 }
 
-button#regionBtn:hover {
-  background-color:aquamarine;
+button#regionBtn:hover, #searchBtn:hover{
+  box-shadow: 0 3px 4px rgba(0,0,0,0.1);
+  background-color: #E4E4E4;
 }
 
 button.selected {
-  background-color: blue;
+  background-color: #E36414;
   color: white;
 }
 
@@ -53,7 +73,30 @@ button.selected {
   justify-content: flex-end;
 }
 
+<<<<<<< HEAD
 .regionSelect-p {
   background-color: beige;
 }
 
+=======
+#confirmBtn {
+  padding : 6px 10px;
+}
+
+#confirmBtn:hover , #regionBtn button:hover{  
+  box-shadow: 0 3px 4px rgba(0,0,0,0.1);
+  background-color: #E36414;
+  color:white;
+}
+
+#regionBtn button:focus {
+  background-color: #E36414;
+  color : white;
+}
+
+.regionSelect-p, .error {
+  font-family: 'Pretendard-Regular';
+  padding: 1px;
+  margin: 8px 0;
+}
+>>>>>>> hwang5

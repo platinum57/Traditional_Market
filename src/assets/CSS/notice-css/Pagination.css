@@ -1,6 +1,8 @@
 .board-page {
-    margin-top: 30px;
+    margin-top: 30px ;
     text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 .board-page .num {
@@ -31,8 +33,38 @@
     text-align: center;
 }
 
-.board-page .btn {
-    padding-top: 10px;
+.board-page .num button:hover {
+    width: 100%;
+    height: 100%;
+    border: none;
+    /* background: #F6F5F2; */
+    cursor: pointer;
     font-size: 1.2rem;
-    letter-spacing: -1px;
+    color: inherit;
+    text-align: center;
+}
+
+.board-page .num .on button:hover {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: black;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: inherit;
+    text-align: center;
+}
+
+.board-page .btn {
+    background-color: white;
+    padding: 5px;
+    margin: 1px 2px;
+    font-size: 18px;
+}
+
+.board-page .btn:hover {
+    background-color: #F6F5F2;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 1px 2px;
 }

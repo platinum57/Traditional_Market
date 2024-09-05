@@ -11,16 +11,18 @@
 .btn-wrap {
     margin-top: 20px;
     text-align: center;
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .btn-wrap .btn-list, .btn-wrap .btn-edit {
     display: inline-block;
     min-width: 80px;
-    padding: 10px;
+    padding: 6px 8px;
     border: 1px solid black;
-    border-radius: 2px;
+    border-radius: 3px;
     font-size: 1.4rem;
-    margin-left: 10px;
+    font-weight: bold;
     text-decoration: none;
     color: #000;
 }
@@ -30,16 +32,29 @@
     color: white;
 }
 
+.btn-list:hover {
+    box-shadow: 0 3px 4px rgba(0,0,0,0.1);
+}
+
 textarea {
     display: block;
     width: 100%;
     height: 300px;
     padding: 15px;
+    margin: 3px 0;
     box-sizing: border-box;
-    border: 0;
     resize: none;
     overflow: auto;
     outline: none;
+    font-size: 16px;
+    border: 1px solid white;
+}
+
+textarea:focus{
+    border: 1px solid #EEEEEE;
+    border-radius: 5px;
+    margin: 3px 0;
+    font-size: 16px;
 }
 
 .input-title dt, .input-title dd {
@@ -53,6 +68,24 @@ textarea {
 .input-title dd input {
     width: 100%;
     border: 0;
-    outline: none;
-    background-color: #f3f1f1;
+    outline: none;    
+    padding: 6px 0 6px 8px;
+    font-size: 17px;
+    border: 1px solid white;
+}
+
+.input-title dd input:focus{
+    border: 1px solid #EEEEEE;
+    border-radius: 5px;
+}
+
+dl {
+    display: flex;
+    align-items: center;
+}
+
+dt {
+    padding: 0 0 0 10px;
+    font-weight: bold;
+    font-size: 18px;
 }

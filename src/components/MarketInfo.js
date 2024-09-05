@@ -61,11 +61,11 @@ const MarketInfo = () => {
     setSelectedMarket(null); // 선택된 시장을 초기화
     setError(null); // 에러 상태 초기화
     setLoading(true); // 로딩 상태로 설정
-  
+
     // 2. 클릭한 시장의 좌표를 이용해 updateMap 이벤트 발생
     const coords = { latitude: market.latitude, longitude: market.longitude };
     document.getElementById('map').dispatchEvent(new CustomEvent('updateMap', { detail: coords }));
-  
+
     // 3. 클릭한 시장의 상세 정보를 불러옴 (setSelectedMarket을 통해 불러옴)
     setSelectedMarket(market);
 };
@@ -92,7 +92,7 @@ const clearRestaurants = () => {
       setRestaurants(response.data);
     } catch (err) {
       setError(console.log('음식점 정보를 불러오는 데 실패했습니다.'));
-    }finally {
+    } finally {
       setLoading(false); // 로딩 상태 해제
     }
   };
@@ -135,7 +135,7 @@ const clearRestaurants = () => {
               </li>
             ))}
           </ul>
-          <Map 
+          <Map
             markets={markets}  // 전체 시장 리스트 전달
             selectedMarket={selectedMarket}  // 클릭한 마커를 강조하기 위한 선택된 시장 전달
             onMarkerClick={setSelectedMarket}  // 마커 클릭 시 호출
@@ -207,25 +207,53 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
   }
 
   return (
-    <div>
+    <div className='top-wrapper'>
+      <div className='top-container'>
       <button onClick={reSearch}>뒤로가기</button>
-      <h2>{details.name}</h2>
-      <p>주소: {details.address}</p>
-      <p><img src={details.parking ? parkingTrue : parkingFalse} className="img-detail-big" />
-      <img src={market.acceptsOnnuri ? voucherTrue:voucherFalse} className="img-detail-big"/></p>
-      <p className='text-spacing'>{details.parking ? '주차장 있어요' : '주차장 없어요'}<span className='texp-gap'></span>
-      {market.acceptsOnnuri ? '온누리상품권 써져요' : '온누리상품권 안써져요'}
-      </p>
-      <h3>기타 편의 시설</h3>
-      <div className='detail'>
-        <img src={details.facilities.고객지원센터 ? helpdestTrue : helpdestFalse} className="img-detail"/>
-        <img src={details.facilities.유아놀이방 ? playTrue : playFalse} className="img-detail"/>
-        <img src={details.facilities.고객휴게실 ? loungeTrue : loungeFalse} className="img-detail"/>
-        <img src={details.facilities.수유실 ? mommyTrue : mommyFalse} className="img-detail"/>
-        <img src={details.facilities.물품보관함 ? lockerTrue : lockerFalse} className="img-detail"/>
-        <img src={details.facilities.자전거보관함 ? bycicleTrue : bycicleFalse} className="img-detail"/>
+      <p>{details.name}</p>
+      {details.address}
+      </div>
+      <br/>
+      <div className='icon-container'>
+        <div className='big-icon'>
+        <img src={details.parking ? parkingTrue : parkingFalse} className="img-detail-big" />
+        {details.parking ? '주차장 있어요' : '주차장 없어요'}
+        <div className='small-icons'>
+          <div className='small-icon'>
+            <img src={details.facilities.고객지원센터 ? helpdestTrue : helpdestFalse} className="img-detail"/>
+            {details.facilities.고객지원센터 ? '고객지원센터 O' : '고객지원센터 X'}
+          </div>
+          <div className='small-icon'>
+          <img src={details.facilities.유아놀이방 ? playTrue : playFalse} className="img-detail"/>
+          {details.facilities.유아놀이방 ? '유아놀이방 O' : '유아놀이방 X'}
+          </div>
+          <div className='small-icon'>
+          <img src={details.facilities.고객휴게실 ? loungeTrue : loungeFalse} className="img-detail"/>
+          {details.facilities.고객휴게실 ? '고객휴게실 O' : '고객휴게실 X'}
+          </div>
+        </div>
+        </div>
+        <div className='big-icon'>
+        <img src={market.acceptsOnnuri ? voucherTrue:voucherFalse} className="img-detail-big"/>
+        {market.acceptsOnnuri ? '온누리상품권 써져요' : '온누리상품권 안써져요'}
+        <div className='small-icons'>
+          <div className='small-icon'>
+          <img src={details.facilities.수유실 ? mommyTrue : mommyFalse} className="img-detail"/>
+          {details.facilities.수유실 ? '수유실 O' : '수유실 X'}
+          </div>
+          <div className='small-icon'>
+          <img src={details.facilities.물품보관함 ? lockerTrue : lockerFalse} className="img-detail"/>
+          {details.facilities.물품보관함 ? '물품보관함 O' : '물품보관함 X'}
+          </div>
+          <div className='small-icon'>
+          <img src={details.facilities.자전거보관함 ? bycicleTrue : bycicleFalse} className="img-detail"/>
+          {details.facilities.자전거보관함 ? '자전거보관함 O' : '자전거보관함 X'}
+          </div>
+        </div>
+        </div>
       </div>
 
+<div className='restaurants-container'>
       <h3>반경 500m 내 음식점</h3>
 <ul>
   {error || restaurants.length === 0 ? (
@@ -234,13 +262,14 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
     restaurants.map((restaurant, index) => (
       <li key={index}>
         <h4>{restaurant.name}</h4>
-        <div><img src={restaurant.thumbnail ? restaurant.thumbnail : Sorry}/></div>
+        <div className='restaurant-wrapper'><img src={restaurant.thumbnail ? restaurant.thumbnail : Sorry}/></div>
         <p>거리: {restaurant.distance}m</p>
         <p>전화번호: {restaurant.phone || '없음'}</p>
       </li>
     ))
   )}
 </ul>
+</div>
     </div>
   );
 };

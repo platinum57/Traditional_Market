@@ -3,7 +3,7 @@ import '../../assets/CSS/LogIn.css';
 
 function LogIn() {
   return (
-    <div style={{ width: '25%', height: '350px', margin: '0 auto', padding: '50px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+    <div style={{ width: '25%', height: '350px', margin: '160px auto', padding: '50px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
       <h2>로그인</h2>
       <form>
         <div className="form-group">
@@ -15,8 +15,9 @@ function LogIn() {
           <label htmlFor="password">비밀번호</label>
           <input type="password" id="password" name="password" placeholder="비밀번호를 적어주세요" />
         </div>
-
+        <div className="login-btn">
         <button type="submit">로그인</button>
+        </div>
       </form>
     </div>
   );
