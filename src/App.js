@@ -12,6 +12,7 @@ import AnyangMarkets from './components/AnyangMarkets';
 import Notice from './components/subpages/notice/Notice';
 import Write from './components/subpages/notice/Write'; // Write 컴포넌트 임포트
 import View from './components/subpages/notice/View'; // View 컴포넌트 임포트
+import QnA from './components/subpages/qna/QnA';
 
 function MainContent() {
   return (
@@ -39,8 +40,10 @@ function App() {
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/LogIn" element={<LogIn />} />
           <Route path="/Notice/*" element={<Notice />} /> {/* Notice 페이지 연결 */}
+          <Route path="/QnA/*" element={<QnA />} /> {/* Notice 페이지 연결 */}
           <Route path="/Write" element={<Write />} /> {/* Write 페이지 연결 */}
           <Route path="/view/:id" element={<View />} /> {/* View 페이지 연결 */}
+          <Route path="/notice/edit/:id" element={<Write />} />  {/* 기존 게시글 수정 */}
           {/* 모든 미지정 경로를 기본 경로로 리디렉션 */}
           <Route path="*" element={<MainContent />} />
         </Routes>

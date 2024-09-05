@@ -1,0 +1,12 @@
+.markets-list li{
+    list-style: none;
+    padding: 3px;
+    font-weight: 600;
+    cursor: pointer;
+    /* border: 2px solid black; */
+}
+
+.markets-list li:hover{
+    color:rgb(93, 184, 184);
+}
+

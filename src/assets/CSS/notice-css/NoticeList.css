@@ -1,0 +1,39 @@
+.board-list {
+    width: 100%;
+    border-top: 2px solid #000;
+}
+
+.board-list > div {
+    border-bottom: 1px solid #ddd;
+}
+
+.board-list > div.top {
+    border-bottom: 1px solid #999;
+}
+
+.board-list > div > div {
+    display: inline-block;
+    padding: 15px 0;
+    text-align: center;
+}
+
+.board-list .num {
+    width: 10%;
+}
+
+.board-list .title {
+    width: 60%;
+    text-align: left;
+}
+
+.board-list .top .title {
+    text-align: center;
+}
+
+.board-list .writer {
+    width: 10%;
+}
+
+.board-list .date {
+    width: 20%;
+}
