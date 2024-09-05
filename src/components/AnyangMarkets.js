@@ -149,10 +149,12 @@ const AnyangMarkets = () => {
 const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [marketError, setMarketError] = useState(null);
+  const [apiError, setApiError] = useState(null); // 서버 에러 상태 추가
 
   useEffect(() => {
     const fetchMarketDetails = async () => {
+      setLoading(true);
+      setApiError(null); // API 에러 초기화
       try {
         const response = await axios.get(`${localhosturl}/api/market-details`, {
           params: {
@@ -161,11 +163,21 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
             parking: market.주차장보유여부,
           },
         });
-        setDetails(response.data);
-      } catch (err) {
-        setMarketError('해당 시장의 상세 정보를 조회할 수 없습니다. (데이터 미제공)');
+
+        if (response.data) {
+          // 상세 정보를 성공적으로 불러왔을 경우
+          setDetails(response.data);
+        } else {
+          // 불러오는 데 실패한 경우 에러 메시지 표시
+          setDetails({
+            error: '해당 시장의 상세 정보를 조회할 수 없습니다. (데이터 미제공)',
+          });
+        }
+      } catch (error) {
+        // 서버 에러일 경우 에러 메시지 설정
+        setApiError('서버에서 데이터를 가져오는 중 오류가 발생했습니다.');
       } finally {
-        setLoading(false);
+        setLoading(false); // 로딩 상태 해제
       }
     };
 
@@ -173,15 +185,17 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
   }, [market]);
 
   if (loading) return <div>로딩 중...</div>;
-  if (marketError) {
+
+  if (apiError) {
     return (
       <div>
         <button onClick={reSearch}>재검색</button>
-        <p>{marketError}</p>
+        <p>{apiError}</p>
       </div>
     );
   }
 
+  
   return (
     <div>
       <button onClick={reSearch}>뒤로가기</button>
