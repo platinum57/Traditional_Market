@@ -1,7 +1,7 @@
 // app.js
 const express = require('express');
 const morgan = require('morgan');
-const { sequelize } = require('./models'); // Sequelize 인스턴스 가져오기
+const { sequelize, Sequelize } = require('./models'); // Sequelize 인스턴스 가져오기
 const usersRouter = require('./routes/userService'); // Users 신규가입 라우터 가져오기
 const qnaRouter = require('./routes/qnaService'); //Post 작성하는 라우터 가져오기
 const replyRouter = require('./routes/replyService'); //reply 작성하는 라우터
@@ -22,8 +22,8 @@ app.use('/notice', noticeRouter); //신규 공지쓰기 라우터 연결
 sequelize.sync({ force: false }) // force: false -> 기존 테이블 유지
     .then(() => {
         console.log('Database connected');
-        app.listen(3000, () => {
-            console.log('Server is running on port 3000');
+        app.listen(3010, () => {
+            console.log('Server is running on port 3010');
         });
     })
     .catch((err) => {

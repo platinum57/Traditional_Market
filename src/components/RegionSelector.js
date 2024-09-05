@@ -157,7 +157,7 @@ function RegionSelector({ onRegionChange, selectedRegion, selectedDistrict }) {
   return (
     <div>
       <button id="regionBtn" type="button" onClick={openModal}>지역 선택</button>
-      <p>선택된 지역: {selectedRegion} {selectedDistrict}</p>
+      <p className="regionSelect-p">선택된 지역: {selectedRegion} {selectedDistrict}</p>
 
       <RegionModal
         isOpen={isModalOpen}
