@@ -3,7 +3,7 @@ import '../../assets/CSS/LogIn.css';
 
 function LogIn() {
   return (
-    <div style={{ width: '25%', height: '350px', margin: '0 auto', padding: '50px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+    <div style={{ width: '25%', height: '350px', margin: '20px auto', padding: '50px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
       <h2>로그인</h2>
       <form>
         <div className="form-group">

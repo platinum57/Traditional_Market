@@ -17,8 +17,8 @@ function RegionModal({ isOpen, onClose, regions, onRegionSelect, onDistrictSelec
   
 
   return (
-    <div className="modal" onClick={onClose}>
-      <div className="modal-content" onClick={handleModalClick} >
+    <div className="modal" onClick={onClose} >
+      <div className="modal-content" onClick={handleModalClick}  id="regionBtn" >
         <h3>지역 선택</h3>
         <div className="region-section">
           <h4>광역시/도 선택</h4>
@@ -55,7 +55,7 @@ function RegionModal({ isOpen, onClose, regions, onRegionSelect, onDistrictSelec
         )}
 
         <div className="modal-actions">
-          <button type="button" onClick={handleConfirm}>확인</button>
+          <button id="confirmBtn" type="button" onClick={handleConfirm}>확인</button>
         </div>
       </div>
     </div>

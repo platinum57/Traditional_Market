@@ -61,11 +61,11 @@ const MarketInfo = () => {
     setSelectedMarket(null); // 선택된 시장을 초기화
     setError(null); // 에러 상태 초기화
     setLoading(true); // 로딩 상태로 설정
-  
+
     // 2. 클릭한 시장의 좌표를 이용해 updateMap 이벤트 발생
     const coords = { latitude: market.latitude, longitude: market.longitude };
     document.getElementById('map').dispatchEvent(new CustomEvent('updateMap', { detail: coords }));
-  
+
     // 3. 클릭한 시장의 상세 정보를 불러옴 (setSelectedMarket을 통해 불러옴)
     setSelectedMarket(market);
 };
@@ -92,7 +92,7 @@ const clearRestaurants = () => {
       setRestaurants(response.data);
     } catch (err) {
       setError(console.log('음식점 정보를 불러오는 데 실패했습니다.'));
-    }finally {
+    } finally {
       setLoading(false); // 로딩 상태 해제
     }
   };
@@ -111,12 +111,12 @@ const clearRestaurants = () => {
   return (
     <div className="anyang-markets-container">
       <h1>지역별 전통시장 정보</h1>
-      <RegionSelector
-        onRegionChange={handleRegionChange}
-        selectedRegion={region}
-        selectedDistrict={district}
-      />
-      <button onClick={handleSearch}>검색</button>
+        <RegionSelector
+          onRegionChange={handleRegionChange}
+          selectedRegion={region}
+          selectedDistrict={district}
+        />
+        <button id="searchBtn" onClick={handleSearch}>검색</button>
       {loading && <div className="loading">로딩 중...</div>}
       {error && <div className="error">{error}</div>}
       {selectedMarket ? (
@@ -135,7 +135,7 @@ const clearRestaurants = () => {
               </li>
             ))}
           </ul>
-          <Map 
+          <Map
             markets={markets}  // 전체 시장 리스트 전달
             selectedMarket={selectedMarket}  // 클릭한 마커를 강조하기 위한 선택된 시장 전달
             onMarkerClick={setSelectedMarket}  // 마커 클릭 시 호출
