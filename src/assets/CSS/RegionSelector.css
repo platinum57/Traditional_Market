@@ -35,6 +35,7 @@ button {
   border-radius: 4px;
   cursor: pointer;
   background-color: lightgray;
+  display: inline-block;
 }
 
 button#regionBtn:hover {
@@ -55,3 +56,4 @@ button.selected {
 .regionSelect-p {
   background-color: beige;
 }
+

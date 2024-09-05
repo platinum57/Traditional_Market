@@ -110,7 +110,7 @@ const clearRestaurants = () => {
 
   return (
     <div className="anyang-markets-container">
-      <h1>지역별 전통시장 정보</h1>
+      
       <RegionSelector
         onRegionChange={handleRegionChange}
         selectedRegion={region}
