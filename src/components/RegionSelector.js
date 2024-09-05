@@ -93,7 +93,7 @@ function RegionSelector({ onRegionChange, selectedRegion, selectedDistrict }) {
       "남구", "동구", "북구", "울주군", "중구"
     ],
     "세종특별시": [
-      "세종시 전체"
+      "금남면", "부강면", "전의면", "조치원읍"
     ],
     "경기도": [
       "가평군", "고양시", "과천시", "광명시","광주시", "구리시", "군포시","김포시", "남양주시", "동두천시", "부천시", "성남시", "수원시", "시흥시", "안산시", "안성시", "안양시", "양주시", "양평군", "여주시","연천군", "오산시", "용인시", "의왕시", "의정부시", "이천시", "파주시", "평택시", "포천시", "하남시", "화성시"
@@ -143,7 +143,6 @@ function RegionSelector({ onRegionChange, selectedRegion, selectedDistrict }) {
   return (
     <div className="region-container">
       <button id="regionBtn" type="button" onClick={openModal}>지역 선택</button>
-      <p className="regionSelect-p">선택된 지역: {selectedRegion} {selectedDistrict}</p>
 
       <RegionModal
         isOpen={isModalOpen}

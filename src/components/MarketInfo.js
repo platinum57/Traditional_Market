@@ -110,16 +110,24 @@ const clearRestaurants = () => {
 
   return (
     <div className="anyang-markets-container">
+      <div className='search-container'>
       <div className="region-search-container">
+      <button className='search-button' onClick={handleSearch}>검색</button>
       <RegionSelector
         onRegionChange={handleRegionChange}
         selectedRegion={region}
         selectedDistrict={district}
       />
-      <button className='search-button' onClick={handleSearch}>검색</button>
+      <p className="regionSelect-p">시장을 찾고 싶은 지역은</p>
+      <p className='regionSelect-p-1'>{region} {district}</p>      
+      </div>
+      <div className='onnu'>
+      <p style={{fontSize:'30px'}}>온누리 상품권이란?</p>
+      <p style={{fontSize:'17px'}}>온누리상품권은 전통시장 활성화를 위해 정부에서 발행하는 상품권입니다.
+      온누리상품권을 구매할 경우, 5~10%정도 할인 된 가격으로 구매할 수 있으며, 소득공제 혜택 또한 누릴 수 있습니다.</p>
+      </div>
       </div>
 
-      {loading && <div className="loading">로딩 중...</div>}
       {error && <div className="error">{error}</div>}
       {selectedMarket ? (
         <MarketDetail
@@ -130,19 +138,24 @@ const clearRestaurants = () => {
         />
       ) : (
         <>
+        <div className='list-container'>
+          <p>시장 목록</p>
+          <span>시장목록의 순서는 점포가 많은 순서대로</span>
           <ul className="markets-list">
             {markets.map((market, index) => (
               <li key={index} onClick={() => handleMarketClick(market)}>
                 {market.시장명}
               </li>
-            ))}
-          </ul>
-          <Map
+            ))}<Map
             markets={markets}  // 전체 시장 리스트 전달
             selectedMarket={selectedMarket}  // 클릭한 마커를 강조하기 위한 선택된 시장 전달
             onMarkerClick={setSelectedMarket}  // 마커 클릭 시 호출
             clearRestaurants={clearRestaurants} // 음식점 정보 초기화 함수 전달
           />
+          </ul>
+          
+          </div>
+          
         </>
       )}
     </div>
@@ -188,7 +201,7 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
     fetchMarketDetails();
   }, [market]);
 
-  if (loading) return <div>로딩 중...</div>;
+  if (loading) return ;
 
   if (apiError) {
     return (

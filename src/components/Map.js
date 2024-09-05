@@ -142,7 +142,7 @@ const Map = ({ markets, onMarkerClick, clearRestaurants  }) => {
     addMarkers();
   }, [markets]);
 
-  return <div id="map" style={{ width: '100%', height: '92.7%' }} />;
+  return <div id="map" style={{ width: '100%', height: '81vh' }} />;
 };
 
 export default Map;

@@ -1,10 +1,24 @@
 .markets-list li{
-    list-style: none;
-    padding: 3px;
-    font-weight: 600;
+    padding: 20px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border-radius: 8px; /* 둥근 모서리 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 */
+    font-size: 18px;
+    color: #333; /* 텍스트 색상 */
     cursor: pointer;
-    /* border: 2px solid black; */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 호버 시 부드러운 애니메이션 */
+    list-style: none;
+    margin-right: 35px;
 }
+.markets-list li:hover {
+    transform: translateY(-5px); /* 호버 시 위로 약간 이동 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 증가 */
+    background-color: #f0f0f0; /* 호버 시 배경색 변경 */
+  }
+  .markets-list li:active {
+    transform: translateY(2px); /* 클릭 시 약간 아래로 이동 */
+  }
 
 .markets-list li:hover{
     color:rgb(93, 184, 184);
@@ -102,15 +116,60 @@
 }
 
 .top-container button:hover{
-    background-color: rebeccapurple;
+    box-shadow: 0 3px 4px rgba(0,0,0,0.1);
+    background-color: #E4E4E4;
 }
-
+.regionSelect-p{
+    font-size: 30px;
+}
+.regionSelect-p-1{
+    font-size: 60px;
+    border-bottom: 1px currentColor solid;
+}
 .region-search-container {
-    display: flex;
     gap: 10px; /* 요소들 사이의 간격 조절 */
+    margin-top: 25px;
   }
   
   .search-button {
     float: right;
-    margin-left: 20vh;
+    height: 30px;
+  }
+
+  .search-button:hover{
+    box-shadow: 0 3px 4px rgba(0,0,0,0.1);
+    background-color: #E4E4E4;
+  }
+
+  .anyang-markets-container{
+    display: flex;
+  }
+  .search-container{
+    width: 53vh;
+    height: 75vh;
+    margin-left: 25px;
+  }
+  .list-container {
+    width: 40vh;
+    height: 75vh;
+    border-left: 2px currentColor dashed;
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    overflow-y: scroll;
+  }
+  .list-container p{
+    margin-top: 0;
+    margin-left: 25px;
+    font-size: 50px;
+    margin-bottom: 40px;
+  }
+  .list-container span{
+    margin-top: 0;
+    margin-left: 25px;
+    font-size: 20px;
+  }
+  
+  .onnu{
+    margin-top: 40vh;
   }

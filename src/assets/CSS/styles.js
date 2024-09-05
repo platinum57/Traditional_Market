@@ -67,11 +67,5 @@ export const RightContainer = styled.div`
   display: flex;
   flex-direction: column; /* 상하로 나누기 위해 column 방향 flex 사용 */
   width: 50%; /* 오른쪽 반을 차지하도록 설정 */
-`;
-
-export const MarketListContainer = styled.div`
-  flex: 9; /* 하단 영역 */
-  padding: 20px;
-  overflow-y: scroll; /* 세로 스크롤 활성화 */
-  margin-bottom: 50px;
+  overflow-y: scroll;
 `;

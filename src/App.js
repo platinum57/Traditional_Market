@@ -21,9 +21,7 @@ function MainContent() {
         <Map />
       </MapWrapper>
       <RightContainer>
-        <MarketListContainer>
           <MarketInfo />
-        </MarketListContainer>
       </RightContainer>
     </ContentContainer>
   );
