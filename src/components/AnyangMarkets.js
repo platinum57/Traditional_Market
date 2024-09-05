@@ -189,8 +189,11 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
       <button onClick={reSearch}>뒤로가기</button>
       <h2>{details.name}</h2>
       <p>주소: {details.address}</p>
-      <p><img src={details.parking ? parkingTrue : parkingFalse} className="img-detail-big"/>
+      <p><img src={details.parking ? parkingTrue : parkingFalse} className="img-detail-big" />
       <img src={market.acceptsOnnuri ? voucherTrue:voucherFalse} className="img-detail-big"/></p>
+      <p className='text-spacing'>{details.parking ? '주차장 있어요' : '주차장 없어요'}<span className='texp-gap'></span>
+      {market.acceptsOnnuri ? '온누리상품권 써져요' : '온누리상품권 안써져요'}
+      </p>
       <h3>기타 편의 시설</h3>
       <div className='detail'>
         <img src={details.facilities.고객지원센터 ? helpdestTrue : helpdestFalse} className="img-detail"/>

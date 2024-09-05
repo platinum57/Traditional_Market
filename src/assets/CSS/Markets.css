@@ -23,3 +23,11 @@
     height: 120px;
     padding-right: 40px;
 }
+.text-spacing{
+    display: flex;
+    gap: 27px;
+    margin-left: 17px;
+}
+.text-gap{
+    margin-right: 20px;
+}
