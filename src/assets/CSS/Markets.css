@@ -10,3 +10,16 @@
     color:rgb(93, 184, 184);
 }
 
+.detail{
+    list-style: none;
+}
+.img-detail{
+    width: 80px;
+    height: 80px;
+    padding-right: 40px;
+}
+.img-detail-big{
+    width: 120px;
+    height: 120px;
+    padding-right: 40px;
+}
