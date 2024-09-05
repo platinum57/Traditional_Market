@@ -22,8 +22,8 @@ app.use('/notice', noticeRouter); //신규 공지쓰기 라우터 연결
 sequelize.sync({ force: false }) // force: false -> 기존 테이블 유지
     .then(() => {
         console.log('Database connected');
-        app.listen(3000, () => {
-            console.log('Server is running on port 3000');
+        app.listen(3010, () => {
+            console.log('Server is running on port 3010');
         });
     })
     .catch((err) => {
