@@ -110,13 +110,15 @@ const clearRestaurants = () => {
 
   return (
     <div className="anyang-markets-container">
-      
+      <div className="region-search-container">
       <RegionSelector
         onRegionChange={handleRegionChange}
         selectedRegion={region}
         selectedDistrict={district}
       />
-      <button onClick={handleSearch}>검색</button>
+      <button className='search-button' onClick={handleSearch}>검색</button>
+      </div>
+
       {loading && <div className="loading">로딩 중...</div>}
       {error && <div className="error">{error}</div>}
       {selectedMarket ? (

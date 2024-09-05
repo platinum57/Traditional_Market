@@ -104,3 +104,13 @@
 .top-container button:hover{
     background-color: rebeccapurple;
 }
+
+.region-search-container {
+    display: flex;
+    gap: 10px; /* 요소들 사이의 간격 조절 */
+  }
+  
+  .search-button {
+    float: right;
+    margin-left: 20vh;
+  }
