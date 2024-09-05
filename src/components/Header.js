@@ -8,10 +8,11 @@ const Header = () => {
   return (
     <header className="header">
       <img class="logo" src={logo} alt=""/>
-      <h1 class="Name">전통길</h1>
+      <h1 class="Name">
+        <Link to="/MainContent" className="MainTitle">전통길</Link>
+      </h1>
       <nav className="nav">
         <ul className="nav-links">
-          <li><Link to="/MainContent">대문</Link></li>
           <li><Link to="/Notice">공지사항</Link></li>
           <li><Link to="/QnA">질문</Link></li>
           <li><Link to="/Signin">회원가입</Link></li>

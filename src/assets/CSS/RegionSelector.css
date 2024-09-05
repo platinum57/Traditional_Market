@@ -51,3 +51,7 @@ button.selected {
   display: flex;
   justify-content: flex-end;
 }
+
+.regionSelect-p {
+  background-color: beige;
+}

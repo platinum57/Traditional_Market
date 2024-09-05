@@ -129,7 +129,7 @@ if (selectedMarket && selectedMarket.latitude != null && selectedMarket.longitud
     addMarkers();
   }, [markets, selectedMarket]);
 
-  return <div id="map" style={{ width: '100%', height: '75vh' }} />;
+  return <div id="map" style={{ width: '100%', height: '76.6vh' }} />;
 };
 
 export default Map;
