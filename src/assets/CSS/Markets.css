@@ -23,11 +23,84 @@
     height: 120px;
     padding-right: 40px;
 }
-.text-spacing{
+
+.icon-container {
     display: flex;
-    gap: 27px;
-    margin-left: 17px;
+    gap: 0px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
 }
-.text-gap{
-    margin-right: 20px;
+
+.big-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+}
+
+.big-icon img {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.small-icons {
+    display: flex;
+    justify-content: center;
+    gap: 0px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.small-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* 수평 중앙 정렬 */
+    justify-content: center; /* 수직 중앙 정렬 */
+    text-align: center;
+}
+
+.small-icon img {
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 5px;
+    padding-left: 40px;
+    
+}
+
+.small-icon div {
+    display: block;
+    text-align: center;
+}
+
+.top-container {
+    margin-left: 30px;
+}
+
+.top-container p {
+    font-size: 50px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.restaurants-container li {
+    list-style: none;
+}
+
+.restaurant-wrapper img {
+    width: 550px;
+    height: 330px;
+}
+
+.top-container button {
+    float: right;
+}
+
+.top-container button:hover{
+    background-color: rebeccapurple;
 }
