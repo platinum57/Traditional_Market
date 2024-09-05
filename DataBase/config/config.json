@@ -2,23 +2,25 @@
   "development": {
     "username": "root",
     "password": "root123!",
-    "database": "traditional-market",
+    "database": "traditionalMarket",
     "host": "traditional-market.c9okiuoku4c3.ap-southeast-2.rds.amazonaws.com",
     "port": 3306,
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "password": "root123!",
+    "database": "traditionalMarket",
+    "host": "traditional-market.c9okiuoku4c3.ap-southeast-2.rds.amazonaws.com",
+    "port": 3306,
     "dialect": "mysql"
   },
   "production": {
     "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "password": "root123!",
+    "database": "traditionalMarket",
+    "host": "traditional-market.c9okiuoku4c3.ap-southeast-2.rds.amazonaws.com",
+    "port": 3306,
     "dialect": "mysql"
   }
 }

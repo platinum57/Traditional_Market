@@ -1,7 +1,7 @@
 // app.js
 const express = require('express');
 const morgan = require('morgan');
-const { sequelize } = require('./models'); // Sequelize 인스턴스 가져오기
+const { sequelize, Sequelize } = require('./models'); // Sequelize 인스턴스 가져오기
 const usersRouter = require('./routes/userService'); // Users 신규가입 라우터 가져오기
 const qnaRouter = require('./routes/qnaService'); //Post 작성하는 라우터 가져오기
 const replyRouter = require('./routes/replyService'); //reply 작성하는 라우터
