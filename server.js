@@ -8,7 +8,7 @@ const port = 5050;
 app.use(cors());
 
 // API 키 설정
-const DATA_GO_KR_SERVICE_KEY = 'V28pENnD1KiAhyUvZhFFO9y3h%2FCYnVRDZxBXHXPwBFIcyMhW0VaEr6uZ1J1fRWNJr88cktC3tXCh%2Fvif%2FRV2sQ%3D%3D'; // https://www.data.go.kr에서 발급받은 키
+const DATA_GO_KR_SERVICE_KEY = 'VrVc8p7b44YnASlALarIy2OCDcfcaon00fCbS46R9wYQo54OwPTd5LIXcuNkwjr2baSYo0X9owrGQmpIfAeeKw%3D%3D'; // https://www.data.go.kr에서 발급받은 키
 const KAKAO_API_KEY = '275e44cf1fd3b5b851f999dd586904b5'; // 카카오 API 키
 
 // 시장 목록 API 엔드포인트
