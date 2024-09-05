@@ -25,7 +25,7 @@ const Map = ({ markets, onMarkerClick }) => {
         mapRef.current = new window.kakao.maps.Map(mapContainer, mapOption);
 
         mapContainer.addEventListener('updateMap', (e) => {
-         const { latitude, longitude } = e.detail;
+        const { latitude, longitude } = e.detail;
 
     // 좌표가 없는 경우 updateMap 실행하지 않음
     if (latitude == null || longitude == null) {

@@ -3,6 +3,8 @@ import axios from 'axios';
 import RegionSelector from './RegionSelector';
 import Map from './Map';
 
+const localhosturl = 'http://localhost:5050'
+
 const AnyangMarkets = () => {
   const [region, setRegion] = useState('');
   const [district, setDistrict] = useState('');
@@ -19,7 +21,7 @@ const AnyangMarkets = () => {
     setError(null);
     try {
       const fullRegion = `${region} ${district}`.trim();
-      const response = await axios.get('http://localhost:5000/api/markets', {
+      const response = await axios.get(`${localhosturl}/api/markets`, {
         params: { region: fullRegion },
       });
       setMarkets(response.data); // markets 상태 업데이트
@@ -82,7 +84,7 @@ const AnyangMarkets = () => {
   // 음식점 데이터 가져오는 함수
   const fetchRestaurants = async (latitude, longitude) => {
     try {
-      const response = await axios.get('http://localhost:5000/api/restaurants-near-market', {
+      const response = await axios.get(`${localhosturl}/api/restaurants-near-market`, {
         params: { latitude, longitude },
       });
       setRestaurants(response.data);
@@ -151,7 +153,7 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
   useEffect(() => {
     const fetchMarketDetails = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/market-details', {
+        const response = await axios.get(`${localhosturl}/api/market-details`, {
           params: {
             marketName: market.시장명,
             address: market.소재지도로명주소 || market.소재지지번주소,
