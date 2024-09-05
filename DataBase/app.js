@@ -1,14 +1,17 @@
 // app.js
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const { sequelize, Sequelize } = require('./models'); // Sequelize 인스턴스 가져오기
 const usersRouter = require('./routes/userService'); // Users 신규가입 라우터 가져오기
 const qnaRouter = require('./routes/qnaService'); //Post 작성하는 라우터 가져오기
 const replyRouter = require('./routes/replyService'); //reply 작성하는 라우터
 const noticeRouter = require('./routes/noticeService'); //Notice 작성하는 라우터
 
+
 const app = express();
 
+app.use(cors()); // CORS 설정
 app.use(morgan('dev')); // 로그
 app.use(express.json()); // JSON 본문 파싱
 app.use(express.urlencoded({ extended: false })); // URL 인코딩된 본문 파싱

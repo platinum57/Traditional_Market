@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import NoticeList from "./NoticeList";
 import Pagination from './Pagination';
@@ -6,19 +6,12 @@ import View from './View';
 import Write from './Write';
 // import '../../../assets/CSS/Notice.css';
 import '../../../assets/CSS/notice-css/global.css';
+import axios from "axios";
 
 function Notice() {
-    const [posts, setPosts] = useState([
-        { num: 5, title: "게시글 제목 5", writer: "아이디?", date: "2024-9-02" },
-        { num: 4, title: "게시글 제목 4", writer: "아이디?", date: "2024-9-02" },
-        { num: 3, title: "게시글 제목 3", writer: "아이디?", date: "2024-9-02" },
-        { num: 2, title: "게시글 제목 2", writer: "아이디?", date: "2024-9-02" },
-        { num: 1, title: "게시글 제목 1", writer: "아이디?", date: "2024-9-02" },
-        // 게시글 더 추가 가능
-    ]);
-
+    const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
-    const postsPerPage = 2; // 페이지당 게시글 수
+    const postsPerPage = 5; // 페이지당 게시글 수
 
     // 현재 페이지의 게시글 계산
     const indexOfLastPost = currentPage * postsPerPage;
@@ -49,7 +42,7 @@ function Notice() {
                         </div>
                     </>
                 } />
-                <Route path="/view/:id" element={<View posts={posts} />} />
+                <Route path="/view/:notice_num" element={<View />} />
                 <Route path="/Write" element={<Write addPost={(newPost) => setPosts([newPost, ...posts])} />} />
             </Routes>
             {location.pathname === "/Notice" && (
