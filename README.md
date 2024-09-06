@@ -1,6 +1,6 @@
 <div align="center">
 
-### 🔧ᴜꜱɪɴɢ
+### 🔧ᴜꜱɪɴɢ🔧
 <img src="https://img.shields.io/badge/VISUAL%20STUDIO%20CODE-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white"/>
 <img src="https://img.shields.io/badge/POSTMAN-FF6C37?style=flat-square&logo=postman&logoColor=white"/>
 <img src="https://img.shields.io/badge/GITHUB-181717?style=flat-square&logo=github&logoColor=white"/>
