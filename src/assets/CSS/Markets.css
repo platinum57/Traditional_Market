@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'goorm-sans-bold';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408@1.0/goorm-sans-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
 .markets-list li{
     padding: 20px;
     margin-bottom: 10px;
@@ -14,15 +21,12 @@
 .markets-list li:hover {
     transform: translateY(-5px); /* 호버 시 위로 약간 이동 */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 호버 시 그림자 증가 */
-    background-color: #f0f0f0; /* 호버 시 배경색 변경 */
+    background-color:#F5F7F8; /* 호버 시 배경색 변경 */
+    color:#E36414;
   }
   .markets-list li:active {
     transform: translateY(2px); /* 클릭 시 약간 아래로 이동 */
   }
-
-.markets-list li:hover{
-    color:rgb(93, 184, 184);
-}
 
 .detail{
     list-style: none;
@@ -76,6 +80,7 @@
     align-items: center;    /* 수평 중앙 정렬 */
     justify-content: center; /* 수직 중앙 정렬 */
     text-align: center;
+    width: 120px;
 }
 
 .small-icon img {
@@ -120,10 +125,10 @@
     background-color: #E4E4E4;
 }
 .regionSelect-p{
-    font-size: 30px;
+    font-size: 25px;
 }
 .regionSelect-p-1{
-    font-size: 60px;
+    font-size: 45px;
     border-bottom: 1px currentColor solid;
 }
 .region-search-container {
@@ -171,5 +176,23 @@
   }
   
   .onnu{
-    margin-top: 40vh;
+    margin-top: 29vh;
   }
+  .top-container button{
+    width: 80px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+#research {
+  background-color: #E4E4E4;
+  font-family: 'goorm-sans-bold';
+  padding: 3px 8px;
+  margin: 5px 70px 0 0;
+  width: 100px;
+}
+
+#resarch:hover {
+  background-color: #E36414;
+}

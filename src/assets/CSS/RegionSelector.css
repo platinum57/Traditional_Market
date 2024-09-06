@@ -70,9 +70,6 @@ button.selected {
   justify-content: flex-end;
 }
 
-.regionSelect-p {
-  background-color: beige;
-}
 
 #confirmBtn {
   padding : 6px 10px;

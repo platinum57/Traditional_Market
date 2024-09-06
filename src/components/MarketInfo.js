@@ -122,8 +122,8 @@ const clearRestaurants = () => {
       <p className='regionSelect-p-1'>{region} {district}</p>      
       </div>
       <div className='onnu'>
-      <p style={{fontSize:'30px'}}>온누리 상품권이란?</p>
-      <p style={{fontSize:'17px'}}>온누리상품권은 전통시장 활성화를 위해 정부에서 발행하는 상품권입니다.
+      <p style={{fontSize:'27px'}}>온누리 상품권이란?</p>
+      <p style={{fontSize:'15px'}}>온누리상품권은 전통시장 활성화를 위해 정부에서 발행하는 상품권입니다.
       온누리상품권을 구매할 경우, 5~10%정도 할인 된 가격으로 구매할 수 있으며, 소득공제 혜택 또한 누릴 수 있습니다.</p>
       </div>
       </div>
@@ -140,7 +140,7 @@ const clearRestaurants = () => {
         <>
         <div className='list-container'>
           <p>시장 목록</p>
-          <span>시장목록의 순서는 점포가 많은 순서대로</span>
+          <span style={{fontSize:'16px'}}>시장목록의 순서는 점포가 많은 순서대로</span>
           <ul className="markets-list">
             {markets.map((market, index) => (
               <li key={index} onClick={() => handleMarketClick(market)}>
@@ -224,7 +224,7 @@ const MarketDetail = ({ market, restaurants = [], error, reSearch }) => {
   return (
     <div className='top-wrapper'>
       <div className='top-container'>
-      <button onClick={reSearch}>뒤로가기</button>
+      <button id="research" onClick={reSearch}>뒤로가기</button>
       <p>{details.name}</p>
       {details.address}
       </div>
